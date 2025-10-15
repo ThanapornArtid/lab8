@@ -1,0 +1,136 @@
+<!--
+AI Declaration:
+No Generative AI tools were used for this lab.  
+All code was written manually by the student.
+
+Reflection:
+[ Your Reflection goes here
+Today’s lab helped me learn [key takeaway].  
+I learned how to use Tailwind and some techniques from the slides, and the rest I figured out on my own from the Tailwind website.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Create an Invoice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+<body>
+  <header>
+    <nav class="flex place-content-between m-7 font-semibold">
+      
+      <div class="logo-container ">
+        <a href="/html/index.html">
+          <img src="/assets/logo.png" alt="logo" style="width:30px;"/>
+        </a>
+      </div>
+      <div class="menu ">
+        <a class="p-5" href="/html/invoice.html">Invoice</a>
+        <a class="p-5" href="#">Quotation</a>
+        <a class="p-5" href="#">About Us</a>
+      </div>
+      <div class="logout">
+        <a href="/html/login.html">Log out →</a>
+      </div>
+    </nav>
+
+    <!-- Banner -->
+    <section class ="flex items-center justify-center relative w-full h-60 ">
+       <img src="/assets/bg2.png"  class="absolute w-full h-full object-cover brightness-50" />
+        <h1 class ="absolute font-bold text-[30px] text-white">
+            Create a New Invoice
+        </h1>
+    </section>
+
+
+  </header>
+
+  <main class =" flex items-center justify-center ">
+    <form class="invoice-form m-10 border-2 p-6 rounded relative justify-self-center w-full mr-20 ml-20 ">
+      <h2 class="font-bold text-[25px] pb-4">Create New Invoice</h2>
+      <div>
+        <label for="client_id">Client ID</label>
+        <div>
+        <input placeholder="1" class="mb-3 border-2 rounded p-1.5 w-full" type="text" id="client_id" name="client_id" />
+        </div>
+      </div>
+
+      <div>
+        <label for="quotation_number">Quotation Number</label>
+        <div>
+        <select class="mb-3 border-2 rounded p-1.5 w-full" id="quotation_number" name="quotation_number">
+          <option value="">Select the Quotation</option>
+          <option value="Q-2025-001">Q-2025-001</option>
+          <option value="Q-2025-002">Q-2025-002</option>
+          <option value="Q-2025-003">Q-2025-003</option>
+          <option value="Q-2025-004">Q-2025-004</option>
+          <option value="Q-2025-005">Q-2025-005</option>
+          <option value="Q-2025-006">Q-2025-006</option>
+          <option value="Q-2025-007">Q-2025-007</option>
+          <option value="Q-2025-008">Q-2025-008</option>
+        </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="issue_date">Issue Date</label>
+        <div>
+        <input class="mb-3 border-2 rounded p-1.5 w-full" type="date" id="issue_date" name="issue_date" />
+        </div>
+      </div>
+
+      <div>
+        <label for="due_date">Due Date</label>
+        <div>
+        <input class="mb-3 border-2 rounded p-1.5 w-full" type="date" id="due_date" name="due_date" />
+        </div>
+      </div>
+
+      <div>
+        <label for="status">Status</label>
+        <div>
+        <select class="mb-3 border-2 rounded p-1.5 w-full" id="status" name="status">
+          <option value="Paid">Paid</option>
+          <option value="Unpaid">Unpaid</option>
+        </select>
+        </div>
+      </div>
+
+      <div>
+        <label for="subtotal">Subtotal</label>
+        <div>
+        <input class="mb-3 border-2 rounded p-1.5 w-full" type="number" id="subtotal" name="subtotal" placeholder="0" />
+        </div>
+      </div>
+
+      <div>
+        <label class="flex place-content-between" for="tax_amount">Tax Amount <span class="font-bold text-[12px] text-gray-400">(7%)</span></label>
+        <div>
+        <input class="mb-3 border-2 rounded p-1.5 w-full" type="number" id="tax_amount" name="tax_amount" placeholder="0" />
+        </div>
+      </div>
+
+      <div>
+        <label for="total_amount">Total Amount</label>
+        <div>
+        <input class="border-2 rounded p-1.5 w-full" type="number" id="total_amount" name="total_amount" placeholder="0" />
+        </div>
+      </div>
+
+      <div>
+         <button class="mt-10 mb-0.3 text-[14px] rounded-md bg-sky-700 text-white px-4 py-1  " type="submit">
+                    <a href="/html/invoice.html">Create Invoice</a>      
+         </button>
+        
+      </div>
+    </form>
+  </main>
+
+  <footer class="bg-sky-800 py-3 text-white flex items-center justify-center w-full fixed bottom-0">
+    <p>Use for Demo &copy; Faculty of ICT, Mahidol University</p>
+  </footer>
+</body>
+
+</html>
