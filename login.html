@@ -59,25 +59,27 @@
             </div>
         </section>
     </main>
-    <script type="module">
-        import { login } from "./controller/loginControllers.js";
-        document.addEventListener("DOMContentLoaded", () => {
-            const form = document.querySelector("form");
-            form.addEventListener("submit", async (e) => {
-                e.preventDefault();
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
-                try {
-                    const token = await login(email, password);
-                    // Save token or redirect
-                    alert("Login successful! Token: " + token);
-                    window.location.href = "/index.html";
-                } catch (err) {
-                    alert("Login failed: " + err.message);
-                }
-            });
+   <script type="module">
+    import { login } from "./controller/loginControllers.js";
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            try {
+                const token = await login(email, password);
+                // **FIX**: Save the token to localStorage
+                localStorage.setItem('authToken', token); 
+                alert("Login successful!");
+                // **FIX**: Redirect to the correct invoices page
+                window.location.href = "/invoices.html"; 
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
