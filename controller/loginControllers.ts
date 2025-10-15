@@ -1,5 +1,5 @@
 export async function login(email: string, password: string): Promise<string> {
-    const response = await fetch("http://localhost:3100/auth/login", {
+    const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -12,5 +12,5 @@ export async function login(email: string, password: string): Promise<string> {
     }
 
     const data = await response.json();
-    return data.token;
+    return data.access_token;
 }
