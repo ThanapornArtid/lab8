@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="invoices.css" />
+</head>
+<body>
+  <header>
+    <section class="banner">
+      <h2 class="banner__text">My Invoices</h2>
+      <img class="banner__img" src="assets/bg2.png" />
+    </section>
+  </header>
+  <main class="main">
+    <section class="invoice-app">
+      <section class="invoice__header">
+        <div class="invoice__header__title">
+          <button class="invoice__header__button">☰</button>
+          <span class="invoice__header__text">Invoices</span>
+        </div>
+        <button class="invoice__button">+ Create invoice</button>
+      </section>
+
+      <section class="main__invoice">
+        <nav class="navigation">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#" class="nav__link">
+                <span class="nav__icon"><i class="fa-solid fa-house"></i></span>
+                <span class="nav__text">
+                  <span class="nav__label">Dashboard</span>
+                  <span class="nav__desc">Overlook</span>
+                </span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/invoices.html" class="nav__link">
+                <span class="nav__icon"><i class="fa-solid fa-file-invoice"></i></span>
+                <span class="nav__text">
+                  <span class="nav__label">Invoice</span>
+                  <span class="nav__desc">Create invoices</span>
+                </span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#" class="nav__link">
+                <span class="nav__icon"><i class="fa-solid fa-briefcase"></i></span>
+                <span class="nav__text">
+                  <span class="nav__label">Quotation</span>
+                  <span class="nav__desc">Manage quotations</span>
+                </span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <section class="invoice__table">
+          <section class="invoice__search__filter">
+            <section class="search">
+              <form>
+                Search:
+                <input type="text">
+                <button type="button" class="invoice__button">Search</button>
+              </form>
+            </section>
+            <section class="filter__list">
+              <button class="filter__button filter__button--active">
+                All
+              </button>
+              <button class="filter__button">Overdue</button>
+              <button class="filter__button">Paid</button>
+              <button class="filter__button">Due this month</button>
+              <button class="filter__button">Pending</button>
+            </section>
+          </section>
+
+          <section class="invoice-list">
+            <article class="invoice invoice__table__header">
+              <div class="invoice__info">
+                <div class="invoice__date invoice__table__header">Date</div>
+                <div class="invoice__company invoice__table__header">
+                  Company
+                </div>
+                <div class="invoice__id invoice__table__header">
+                  Invoice Number
+                </div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value invoice__table__header">
+                  Amount
+                </div>
+                <div class="invoice__status invoice__table__header">
+                  Status
+                </div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">AUG 10, 2025</div>
+                <div class="invoice__company">NextGen Retail Co.</div>
+                <div class="invoice__id">INV #20250810002</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿3,750.00</div>
+                <div class="invoice__status invoice__status--paid">Paid</div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">JUL 22, 2025</div>
+                <div class="invoice__company">ZenoTech Systems</div>
+                <div class="invoice__id">INV #20250722009</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿2,300.00</div>
+                <div class="invoice__status invoice__status--overdue">
+                  Overdue
+                </div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">AUG 01, 2025</div>
+                <div class="invoice__company">Acme Corp.</div>
+                <div class="invoice__id">INV #20250801004</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿6,100.00</div>
+                <div class="invoice__status invoice__status--due">
+                  Due this month
+                </div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">JUN 18, 2025</div>
+                <div class="invoice__company">Global Interiors</div>
+                <div class="invoice__id">INV #20250618007</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿1,950.00</div>
+                <div class="invoice__status invoice__status--paid">Paid</div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">JUL 30, 2025</div>
+                <div class="invoice__company">Vehement Capital</div>
+                <div class="invoice__id">INV #20250730006</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿4,320.00</div>
+                <div class="invoice__status invoice__status--overdue">
+                  Overdue
+                </div>
+              </div>
+            </article>
+
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">AUG 14, 2025</div>
+                <div class="invoice__company">Massive Dynamic</div>
+                <div class="invoice__id">INV #20250814005</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿2,750.00</div>
+                <div class="invoice__status invoice__status--pending">
+                  Pending
+                </div>
+              </div>
+            </article>
+            <article class="invoice">
+              <div class="invoice__info">
+                <div class="invoice__date">AUG 16, 2025</div>
+                <div class="invoice__company">ICT Mahidol</div>
+                <div class="invoice__id">INV #20250716031</div>
+              </div>
+              <div class="invoice__amount">
+                <div class="invoice__value">฿10,000.00</div>
+                <div class="invoice__status invoice__status--paid">Paid</div>
+              </div>
+            </article>
+          </section>
+        </section>
+        <section id="create-invoice-modal" style="display: none; padding: 20px; border: 1px solid #ccc;">
+    <h2>Create New Invoice</h2>
+    <form id="create-invoice-form">
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" required><br><br>
+
+        <label for="clientEmail">Client Email:</label>
+        <input type="email" id="clientEmail" required><br><br>
+        
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" step="0.01" required><br><br>
+
+        <label for="issueDate">Issue Date:</label>
+        <input type="date" id="issueDate" required><br><br>
+
+        <button type="submit">Submit Invoice</button>
+        <button type="button" id="cancel-create">Cancel</button>
+    </form>
+</section>
+      </section>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__text">
+        Copyright © Faculty of ICT, Mahidol University
+    </p>
+  </footer>
+<script type="module" src="./typescript-lab/dist/index.js"></script>
+</body>
+
+</html>
