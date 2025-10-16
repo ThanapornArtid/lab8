@@ -41,11 +41,25 @@
         <section class="invoice__table">
           <section class="invoice__search__filter">
             <section class="search">
-              <form>
-                Search:
-                <input type="text">
-                <button type="submit" class="invoice__button">Search</button>
-              </form>
+              <form id="search-form" class="flex flex-row items-center block">
+                    <label class="pr-4">Search:</label>
+                    
+                    <input id="search-client-id" type="text" placeholder="Client Id"
+                        class="border rounded px-3 py-1 relative pr-6 mr-4" />
+                    <input id="search-company-name" type="text" placeholder="Company Name"
+                        class="border rounded px-3 py-1 relative pr-6 mr-4" />
+                        
+                    <input id="search-client-email" type="email" placeholder="Client Email" class="border rounded px-3 py-1 pr-6" />
+                   <div>
+                        <label for="start-date" class="pl-3">Issue Date From</label>
+                        <input type="date" id="start-date" class="border rounded px-3 py-1" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" />
+                    
+                        <label for="end-date" class="pl-3 pr-3">To</label>
+                        <input type="date" id="end-date" class="border rounded px-3 py-1 pl-2" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" />
+                        <button type="submit" class=" invoice__button">Search</button>
+                   </div>
+                    
+                </form>
             </section>
             <section class="filter__list">
               <button class="filter__button filter__button--active">All</button>
@@ -61,6 +75,7 @@
         
         </section>
     </section>
+    
   </main>
   <footer class="footer">
     <p class="footer__text">Copyright © Faculty of ICT, Mahidol University</p>

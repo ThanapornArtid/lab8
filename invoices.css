@@ -1,15 +1,4 @@
-/* <!--
-AI Declaration:
-I used ChatGPT only to clarify HTML semantic tags.  
-No code was directly copied without modification.
 
-Reflection:
-[ I used AI to ask about how to use flex-direction: row-reverse; and to ask suggestions on adding elements to make it look like the original]
---> 
- */
-
-
-/*  || --- Layout of Invoice --- */
 .invoice-app {
   max-width: 420px;
   margin: auto;
@@ -245,7 +234,7 @@ Reflection:
   }
   
 .footer {
-  position: fixed;
+  
   margin-bottom: 5px;
   margin-right: 5px;
   bottom: 0;
