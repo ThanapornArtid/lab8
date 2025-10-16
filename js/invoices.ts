@@ -1,41 +1,67 @@
-import { fetchInvoices } from "../controller/invoiceController.js";
+// **FIX**: Import the new searchInvoices function
+import { fetchInvoices, searchInvoices } from "../controller/invoiceController.js";
 import { Invoice } from "../models/interface.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
-    const token = localStorage.getItem('authToken');
-    const invoiceListElement = document.getElementById("invoice-list-container"); // Add a container in your HTML
+let authToken: string | null = null;
 
-    if (!token) {
+document.addEventListener("DOMContentLoaded", async () => {
+    authToken = localStorage.getItem('authToken');
+    if (!authToken) {
         alert("You are not logged in!");
         window.location.href = "/login.html";
         return;
     }
 
-    if (!invoiceListElement) return;
+    await loadInvoices(); // Load all invoices initially
 
-    try {
-        const invoices = await fetchInvoices(token);
-        renderInvoices(invoices, invoiceListElement);
-    } catch (err) {
-        invoiceListElement.innerHTML = `<div class="text-red-500">Failed to load invoices. Please try again.</div>`;
+    // **FIX**: Add the event listener for the search form
+    const searchForm = document.querySelector('.search form');
+    const searchInput = document.querySelector('.search input') as HTMLInputElement;
+    const invoiceListElement = document.getElementById("invoice-list-container");
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const query = searchInput.value;
+            if (!authToken) return;
+
+            try {
+                const invoices = await searchInvoices(authToken, query);
+                if (invoiceListElement) {
+                    renderInvoices(invoices, invoiceListElement);
+                }
+            } catch(err: any) {
+                 alert(`Search failed: ${err.message}`);
+            }
+        });
     }
 });
 
+async function loadInvoices() {
+    const invoiceListElement = document.getElementById("invoice-list-container");
+    if (!invoiceListElement || !authToken) return;
+
+    try {
+        const invoices = await fetchInvoices(authToken);
+        renderInvoices(invoices, invoiceListElement);
+    } catch (err) {
+        invoiceListElement.innerHTML = `<div style="color: red; padding: 1rem;">Failed to load invoices. Please try again.</div>`;
+    }
+}
+
 function renderInvoices(invoices: Invoice[], container: HTMLElement) {
     if (invoices.length === 0) {
-        container.innerHTML = "<p>No invoices found.</p>";
+        container.innerHTML = "<p style='padding: 1rem;'>No invoices found.</p>";
         return;
     }
 
-    // Clear existing content (like the static examples)
     container.innerHTML = ''; 
-    
-    // Create and append the header (optional, but good practice)
-    // ... add header logic if you want ...
 
     invoices.forEach(invoice => {
         const invoiceElement = document.createElement('article');
         invoiceElement.className = 'invoice';
+        const status = invoice.status || 'pending';
+
         invoiceElement.innerHTML = `
             <div class="invoice__info">
                 <div class="invoice__date">${new Date(invoice.issue_date).toLocaleDateString()}</div>
@@ -43,8 +69,8 @@ function renderInvoices(invoices: Invoice[], container: HTMLElement) {
                 <div class="invoice__id">${invoice.invoice_number}</div>
             </div>
             <div class="invoice__amount">
-                <div class="invoice__value">฿${invoice.total_amount.toLocaleString()}</div>
-                <div class="invoice__status invoice__status--${invoice.status.toLowerCase()}">${invoice.status}</div>
+                <div class="invoice__value">฿${(invoice.total_amount as number).toLocaleString()}</div>
+                <div class="invoice__status invoice__status--${status.toLowerCase()}">${status}</div>
             </div>`;
         container.appendChild(invoiceElement);
     });
