@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Invoices</title> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <title>My Invoices</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"
@@ -27,39 +27,15 @@
           <button class="invoice__header__button">☰</button>
           <span class="invoice__header__text">Invoices</span>
         </div>
-        <button class="invoice__button">+ Create invoice</button>
+        <a href="/create_invoice.html" class="invoice__button" style="text-decoration: none;">+ Create invoice</a>
       </section>
 
       <section class="main__invoice">
         <nav class="navigation">
           <ul class="nav__list">
-            <li class="nav__item">
-              <a href="#" class="nav__link">
-                <span class="nav__icon"><i class="fa-solid fa-house"></i></span>
-                <span class="nav__text">
-                  <span class="nav__label">Dashboard</span>
-                  <span class="nav__desc">Overlook</span>
-                </span>
-              </a>
-            </li>
-            <li class="nav__item">
-              <a href="/invoices.html" class="nav__link">
-                <span class="nav__icon"><i class="fa-solid fa-file-invoice"></i></span>
-                <span class="nav__text">
-                  <span class="nav__label">Invoice</span>
-                  <span class="nav__desc">Create invoices</span>
-                </span>
-              </a>
-            </li>
-            <li class="nav__item">
-              <a href="#" class="nav__link">
-                <span class="nav__icon"><i class="fa-solid fa-briefcase"></i></span>
-                <span class="nav__text">
-                  <span class="nav__label">Quotation</span>
-                  <span class="nav__desc">Manage quotations</span>
-                </span>
-              </a>
-            </li>
+            <li class="nav__item"><a href="#" class="nav__link"><span class="nav__icon"><i class="fa-solid fa-house"></i></span><span class="nav__text"><span class="nav__label">Dashboard</span><span class="nav__desc">Overlook</span></span></a></li>
+            <li class="nav__item"><a href="/invoices.html" class="nav__link"><span class="nav__icon"><i class="fa-solid fa-file-invoice"></i></span><span class="nav__text"><span class="nav__label">Invoice</span><span class="nav__desc">Create invoices</span></span></a></li>
+            <li class="nav__item"><a href="#" class="nav__link"><span class="nav__icon"><i class="fa-solid fa-briefcase"></i></span><span class="nav__text"><span class="nav__label">Quotation</span><span class="nav__desc">Manage quotations</span></span></a></li>
           </ul>
         </nav>
         <section class="invoice__table">
@@ -68,13 +44,11 @@
               <form>
                 Search:
                 <input type="text">
-                <button type="button" class="invoice__button">Search</button>
+                <button type="submit" class="invoice__button">Search</button>
               </form>
             </section>
             <section class="filter__list">
-              <button class="filter__button filter__button--active">
-                All
-              </button>
+              <button class="filter__button filter__button--active">All</button>
               <button class="filter__button">Overdue</button>
               <button class="filter__button">Paid</button>
               <button class="filter__button">Due this month</button>
@@ -82,38 +56,16 @@
             </section>
           </section>
 
-          <section class="invoice-list" id="invoice-list-container">
-              </section>
-          </section>
-        <section id="create-invoice-modal" style="display: none; padding: 20px; border: 1px solid #ccc;">
-            <h2>Create New Invoice</h2>
-            <form id="create-invoice-form">
-                <label for="companyName">Company Name:</label>
-                <input type="text" id="companyName" required><br><br>
-
-                <label for="clientEmail">Client Email:</label>
-                <input type="email" id="clientEmail" required><br><br>
-                
-                <label for="amount">Amount:</label>
-                <input type="number" id="amount" step="0.01" required><br><br>
-
-                <label for="issueDate">Issue Date:</label>
-                <input type="date" id="issueDate" required><br><br>
-
-                <button type="submit">Submit Invoice</button>
-                <button type="button" id="cancel-create">Cancel</button>
-            </form>
+          <section class="invoice-list" id="invoice-list-container"></section>
         </section>
-      </section>
+        
+        </section>
     </section>
   </main>
   <footer class="footer">
-    <p class="footer__text">
-        Copyright © Faculty of ICT, Mahidol University
-    </p>
+    <p class="footer__text">Copyright © Faculty of ICT, Mahidol University</p>
   </footer>
 
 <script type="module" src="/js/invoices.js"></script>
 </body>
-
 </html>
