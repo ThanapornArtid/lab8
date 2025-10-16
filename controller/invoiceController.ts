@@ -1,32 +1,51 @@
-// controller/invoiceController.ts
-import { Invoice } from '../models/interface'; // Assuming your interface is in this path
+import { Invoice } from '../models/interface';
 
-const API_URL = "http://203.159.93.114:3100";; // It's good practice to define the base URL
+const API_URL = "http://203.159.93.114:3100";
 
 export async function fetchInvoices(token: string): Promise<Invoice[]> {
-    const response = await fetch(`${API_URL}/invoice`, { // The teacher's example might have /search, but /invoice is common for getting all
-        headers: {
-            'Authorization': `Bearer ${token}` // You must send the token for authorized routes
-        }
+    const response = await fetch(`${API_URL}/invoice`, {
+        headers: { 'Authorization': `Bearer ${token}` }
     });
-
     if (!response.ok) {
         throw new Error("Failed to fetch invoices");
     }
     return response.json();
 }
 
-export async function createInvoice(token: string, invoice: Partial<Invoice>): Promise<Invoice> {
+// ============== ADD THIS NEW FUNCTION ==============
+/**
+ * Searches for invoices based on a query.
+ * @param token The user's authentication token.
+ * @param query The search term (e.g., a company name or invoice number).
+ * @returns A promise that resolves to an array of matching invoices.
+ */
+export async function searchInvoices(token: string, query: string): Promise<Invoice[]> {
+    const response = await fetch(`${API_URL}/invoice/search?q=${encodeURIComponent(query)}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to search for invoices");
+    }
+    return response.json();
+}
+// =======================================================
+
+export async function createInvoice(token: string, invoiceData: Partial<Invoice>): Promise<Invoice> {
     const response = await fetch(`${API_URL}/invoice`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(invoice)
+        body: JSON.stringify(invoiceData)
     });
     if (!response.ok) {
-        throw new Error("Failed to create invoice");
+        const errorBody = await response.json();
+        throw new Error(errorBody.message || "Failed to create invoice");
     }
     return response.json();
 }
