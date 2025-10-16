@@ -1,8 +1,16 @@
-// **FIX**: Import the new searchInvoices function
-import { fetchInvoices, searchInvoices } from "../controller/invoiceController.js";
+// FIX: Import the new `fetchClientById` function and `Client` interface
+import { fetchInvoices, fetchClientById, Client } from "../controller/invoiceController.js";
 import { Invoice } from "../models/interface.js";
 
+// Define the search criteria interface
+interface SearchCriteria {
+  query: string; // For company name, email, or invoice number
+  startDate?: Date | null;
+  endDate?: Date | null;
+}
+
 let authToken: string | null = null;
+let allInvoices: Invoice[] = []; // Cache for all invoices
 
 document.addEventListener("DOMContentLoaded", async () => {
     authToken = localStorage.getItem('authToken');
@@ -12,44 +20,113 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    await loadInvoices(); // Load all invoices initially
+    await loadInvoices();
 
-    // **FIX**: Add the event listener for the search form
-    const searchForm = document.querySelector('.search form');
-    const searchInput = document.querySelector('.search input') as HTMLInputElement;
-    const invoiceListElement = document.getElementById("invoice-list-container");
-
+    // Event listener for the new search form
+    const searchForm = document.getElementById('search-form');
     if (searchForm) {
         searchForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const query = searchInput.value;
-            if (!authToken) return;
+            
+            // --- THIS IS THE CORRECTED SECTION ---
+            // It correctly gets the full value from each input field.
+            const query = (document.getElementById('search-query') as HTMLInputElement).value;
+            const startDate = (document.getElementById('start-date') as HTMLInputElement).value;
+            const endDate = (document.getElementById('end-date') as HTMLInputElement).value;
 
-            try {
-                const invoices = await searchInvoices(authToken, query);
-                if (invoiceListElement) {
-                    renderInvoices(invoices, invoiceListElement);
-                }
-            } catch(err: any) {
-                 alert(`Search failed: ${err.message}`);
-            }
+            // It builds the 'criteria' object with the values.
+            const criteria: SearchCriteria = {
+                query: query.toLowerCase().trim(),
+                startDate: normalizeToDateOnly(startDate),
+                endDate: normalizeToDateOnly(endDate),
+            };
+            // --- END OF CORRECTION ---
+
+            const filteredInvoices = await filterInvoices(criteria);
+            renderInvoices(filteredInvoices);
         });
     }
 });
 
 async function loadInvoices() {
-    const invoiceListElement = document.getElementById("invoice-list-container");
-    if (!invoiceListElement || !authToken) return;
-
+    if (!authToken) return;
     try {
-        const invoices = await fetchInvoices(authToken);
-        renderInvoices(invoices, invoiceListElement);
+        allInvoices = await fetchInvoices(authToken);
+        renderInvoices(allInvoices);
     } catch (err) {
-        invoiceListElement.innerHTML = `<div style="color: red; padding: 1rem;">Failed to load invoices. Please try again.</div>`;
+        console.error("Failed to load invoices:", err);
+        const container = document.getElementById("invoice-list-container");
+        if(container) {
+            container.innerHTML = `<div style="color: red; padding: 1rem;">Failed to load invoices. Please try again.</div>`;
+        }
     }
 }
 
-function renderInvoices(invoices: Invoice[], container: HTMLElement) {
+/**
+ * Normalizes a date string to a Date object at midnight.
+ */
+function normalizeToDateOnly(dateString?: string): Date | null {
+  if (!dateString) return null;
+  const match = dateString.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return null;
+  const [_, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+/**
+ * Filters invoices based on multiple criteria (client-side).
+ */
+async function filterInvoices(criteria: SearchCriteria): Promise<Invoice[]> {
+    if (!authToken) return [];
+
+    const clientCache: Record<number, Client | null> = {};
+    const results: Invoice[] = [];
+
+    // To make the end date inclusive, we set it to the start of the next day.
+    const inclusiveEndDate = criteria.endDate ? new Date(criteria.endDate.getTime() + 24 * 60 * 60 * 1000) : null;
+
+    for (const invoice of allInvoices) {
+        // 1. Date Filtering
+        const issueDate = new Date(invoice.issue_date);
+        if (criteria.startDate && issueDate < criteria.startDate) {
+            continue; // Skip if before start date
+        }
+        if (inclusiveEndDate && issueDate >= inclusiveEndDate) {
+            continue; // Skip if on or after the day following the end date
+        }
+
+        // 2. Text Query Filtering (Invoice #, Company, Email)
+        if (criteria.query) {
+            const clientId = invoice.client_id as number;
+            if (clientCache[clientId] === undefined) {
+                clientCache[clientId] = await fetchClientById(authToken, clientId);
+            }
+            const client = clientCache[clientId];
+
+            const matchesQuery = 
+                invoice.invoice_number.toLowerCase().includes(criteria.query) ||
+                client?.company_name.toLowerCase().includes(criteria.query) ||
+                client?.email.toLowerCase().includes(criteria.query);
+
+            if (!matchesQuery) {
+                continue; // Skip if no text match
+            }
+        }
+        
+        // If all checks pass, add to results
+        results.push(invoice);
+    }
+    return results;
+}
+
+// FIX: The container parameter is now optional. The function will find it.
+function renderInvoices(invoices: Invoice[]) {
+    const container = document.getElementById("invoice-list-container");
+    if (!container) {
+        console.error("Invoice container not found!");
+        return;
+    }
+    
     if (invoices.length === 0) {
         container.innerHTML = "<p style='padding: 1rem;'>No invoices found.</p>";
         return;
