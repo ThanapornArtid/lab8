@@ -8,13 +8,16 @@ export async function fetchInvoices(token) {
     }
     return response.json();
 }
-// ============== ADD THIS NEW FUNCTION ==============
-/**
- * Searches for invoices based on a query.
- * @param token The user's authentication token.
- * @param query The search term (e.g., a company name or invoice number).
- * @returns A promise that resolves to an array of matching invoices.
- */
+export async function fetchClientById(token, clientId) {
+    const response = await fetch(`${API_URL}/client/${clientId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!response.ok) {
+        console.error(`Failed to fetch client ${clientId}. Status: ${response.status}`);
+        return null;
+    }
+    return response.json();
+}
 export async function searchInvoices(token, query) {
     const response = await fetch(`${API_URL}/invoice/search?q=${encodeURIComponent(query)}`, {
         headers: {
@@ -27,7 +30,6 @@ export async function searchInvoices(token, query) {
     }
     return response.json();
 }
-// =======================================================
 export async function createInvoice(token, invoiceData) {
     const response = await fetch(`${API_URL}/invoice`, {
         method: 'POST',
